@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://budlw6pa18rjc"]
+
+[ext_resource type="Script" path="res://Secene World/Scripts/world.gd" id="1_7qddp"]
+[ext_resource type="Texture2D" uid="uid://cse03uvyc5wi" path="res://Secene World/Res/Red/texture_01.png" id="1_53p20"]
+[ext_resource type="PackedScene" uid="uid://dikb7kwwxr3vt" path="res://Player/Scene/player.tscn" id="2_diuh2"]
+[ext_resource type="Texture2D" uid="uid://dbl1w4o4spldr" path="res://Secene World/Res/rosendal_park_sunset_puresky_4k.hdr" id="3_nkvfl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vmtyt"]
+albedo_texture = ExtResource("1_53p20")
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_triplanar = true
+uv2_world_triplanar = true
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3yd1j"]
+panorama = ExtResource("3_nkvfl")
+
+[sub_resource type="Sky" id="Sky_sx5rk"]
+sky_material = SubResource("PanoramaSkyMaterial_3yd1j")
+
+[sub_resource type="Environment" id="Environment_ldl77"]
+background_mode = 2
+sky = SubResource("Sky_sx5rk")
+ssao_enabled = true
+glow_enabled = true
+fog_enabled = true
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_7qddp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 9.65337, 0)
+light_color = Color(1, 0, 1, 1)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_diuh2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, 6)
+crouch_mode = null
+
+[node name="sprite" type="Node3D" parent="."]
+
+[node name="Earth" type="CSGBox3D" parent="sprite"]
+transform = Transform3D(34, 0, 0, 0, 1, 0, 0, 0, 34, 0, -0.05, 0)
+use_collision = true
+size = Vector3(1, 0.1, 1)
+material = SubResource("StandardMaterial3D_vmtyt")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="sprite"]
+transform = Transform3D(4.17203, 0, 0, 0, 0.0974662, 0, 0, 0, 3.03528, -2.33068, 1.7694, 3.79171)
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="sprite"]
+transform = Transform3D(4.17203, 0, 0, 0, 0.0974662, 0, 0, 0, 3.03528, -6.73755, 1.7694, 3.79171)
+use_collision = true
+
+[node name="Evl" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Evl"]
+environment = SubResource("Environment_ldl77")
